@@ -1,4 +1,4 @@
-#/Users/krishnamodi/PycharmProjects/projectOne/
+# /Users/krishnamodi/PycharmProjects/projectOne/
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -9,9 +9,12 @@ from nltk.corpus import stopwords
 from nltk import pos_tag
 import string
 import os
-script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+
+script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
 rel_path = "result.pdf"
 abs_file_path = os.path.join(script_dir, rel_path)
+
+
 def convert_pdf_to_txt(path):
     rsrcmgr = PDFResourceManager()
     retstr = StringIO()
@@ -24,34 +27,35 @@ def convert_pdf_to_txt(path):
     password = ""
     maxpages = 0
     caching = True
-    pagenos=set()
+    pagenos = set()
 
-    for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password,caching=caching, check_extractable=True):
+    for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password, caching=caching,
+                                  check_extractable=True):
         interpreter.process_page(page)
 
-    text = retstr.getvalue()
+    text = retstr.getvalue().lower()
 
     fp.close()
     device.close()
     retstr.close()
     return text
 
+
 a = convert_pdf_to_txt('result.pdf')
 print(a)
 
-
 import re
-List = re.sub("[^\w*$]", " ",  a)
-#print(List)
+
+List = re.sub("[^\w*$]", " ", a)
+# print(List)
 words = re.sub("\d+", "", List).split()
 print("after split: ", words)
 
 # nltk.download('averaged_perceptron_tagger')
 POS_tag = pos_tag(words)
 
-
 print("Tokenized Text with POS tags: \n")
-print (POS_tag)
+print(POS_tag)
 
 from nltk.stem import WordNetLemmatizer
 
@@ -72,12 +76,12 @@ print(lemmatized_text)
 
 POS_tag = pos_tag(lemmatized_text)
 
-print ("Lemmatized text with POS tags: \n")
-print (POS_tag)
+print("Lemmatized text with POS tags: \n")
+print(POS_tag)
 
 stopwords = []
 
-wanted_POS = ['NN','NNS','NNP','NNPS','JJ','JJR','JJS','VBG','FW']
+wanted_POS = ['NN', 'NNS', 'NNP', 'NNPS', 'JJ', 'JJR', 'JJS', 'VBG', 'FW']
 
 for word in POS_tag:
     if word[1] not in wanted_POS:
@@ -86,10 +90,10 @@ for word in POS_tag:
 punctuations = list(str(string.punctuation))
 
 stopwords = stopwords + punctuations
-rel_stopword_path="long_stopwords.txt"
-stopword_path=os.path.join(script_dir, rel_stopword_path)
+rel_stopword_path = "long_stopwords.txt"
+stopword_path = os.path.join(script_dir, rel_stopword_path)
 stopword_file = open(stopword_path, "rb")
-#Source = https://www.ranks.nl/stopwords
+# Source = https://www.ranks.nl/stopwords
 
 lots_of_stopwords = []
 
@@ -104,11 +108,12 @@ stopwords_plus = set(stopwords_plus)
 processed_text = []
 for word in lemmatized_text:
     if word not in stopwords_plus:
+       # processed_text = processed_text.lower()
         processed_text.append(word)
 
-print ("Processed text: ",processed_text)
+print("Processed text: ", processed_text)
 
 with open('processed_text.txt', 'w') as f:
     for item in processed_text:
         f.write("%s\n" % item)
-#new_file.close()
+# new_file.close()
