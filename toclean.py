@@ -42,14 +42,26 @@ def convert_pdf_to_txt(path):
 
 
 a = convert_pdf_to_txt('result.pdf')
-print(a)
 
+
+"""
+with open("topcount2.csv", "w+") as f:
+    writer = csv.writer(f)
+
+    writer.writerow(updatedword2)
+
+"""
 import re
 
 List = re.sub("[^\w*$]", " ", a)
 # print(List)
 words = re.sub("\d+", "", List).split()
 print("after split: ", words)
+
+with open('resultText.txt', 'w+') as f:
+    for item in words:
+        item=item.lower()
+        f.write("%s\n" % item)
 
 # nltk.download('averaged_perceptron_tagger')
 POS_tag = pos_tag(words)
@@ -106,14 +118,20 @@ stopwords_plus = set(stopwords_plus)
 
 #Stopwords_plus contain total set of all stopwords
 processed_text = []
+i=1;
 for word in lemmatized_text:
     if word not in stopwords_plus:
        # processed_text = processed_text.lower()
         processed_text.append(word)
+        i=i+1
+
+
 
 print("Processed text: ", processed_text)
 
-with open('processed_text.txt', 'w') as f:
+with open('processed_text.txt', 'w+') as f:
     for item in processed_text:
+        item=item.lower()
         f.write("%s\n" % item)
 # new_file.close()
+print(i)

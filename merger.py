@@ -7,7 +7,7 @@ script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 pdfs = ['Beyond_Fintech_-_A_Pragmatic_Assessment_of_Disruptive_Potential_in_Financial_Services.pdf', 'WEF_A_Blueprint_for_Digital_Identity.pdf', 'WEF_The_future__of_financial_services.pdf', 'WEF_The_future_of_financial_infrastructure.pdf']
 
 merger = PdfFileMerger()
-
+complex
 for pdf in pdfs:
     pathpdf=os.path.join(script_dir, pdf)
     merger.append(open(pathpdf, 'rb'))

@@ -15,11 +15,14 @@ for line in processedfile.readlines():
     print(str(line.strip()))
 
 
-print(processed_text)
+print(len(processed_text))
 #with open('wordlist.csv', 'w+', newline='') as myfile:
  #   wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
   #  wr.writerow(processed_text)
+with open('wordlist2.csv', 'w') as myfile:
+    wr = csv.writer(myfile)
+    wr.writerow("words")
 
-with open('wordlist.csv', 'w') as myfile:
+with open('wordlist2.csv', 'w') as myfile:
     wr = csv.writer(myfile)
     wr.writerow(processed_text)
