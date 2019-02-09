@@ -23,13 +23,14 @@ For this objective, following steps are performed:
    This file reads the wordlist.csv and sorts the words in the order it is repated the most. The frequency of each word is        stored with it. We pick the top 100 words and save it in the topcount.csv
    
 5. tfidf.py
-    This file reads the wordlist.csv and pick the top 100 words based TF/IDF which calculates the weightage of words and sves     it in ifcount.csv
+    This file reads the wordlist.csv and pick the top 100 words based on TF/IDF weightage and save it in ifcount.csv
     
 6. totextrank.py
    This file reads the wordlist.csv and the top 100 words based on textrank is stored in textRankList.csv 
    
 7. webScraping.py
-   This file beautifulsoup and selenium to webscrape the career sites to gather details of jobs of SunTrust Bank and Discover    Finncial based on theords from the word count, textrank and TF/IDF list s
+   This file uses tools beautifulsoup and selenium to webscrape the career sites to gather details of jobs of SunTrust Bank 
+   and Discover Financial based on the words from the word count, textrank and TF/IDF lists
    The output files are:   DiscoverTextRank.xlsx, DiscoverTFIDFCount.xlsx, DiscoverWordCountFinal.xlsx
                            SuntrustTextRank.xlsx, SuntrustTFIDFCount.xlsx, SuntrustWordCountFinal.xlsx
                            
@@ -37,4 +38,4 @@ For this objective, following steps are performed:
    This file concatinate the previous 6 files into one DataFrame for the analysis. The output file is FinTechDataFrame.xlsx
   
 9. Data Studio
-   The graphical analysis was made using the Data Studio. On the time of this project, SunTrust Bank is hiring more employees than Discover Financials. The hiring of SunTrust Bank is more focused in Southern East area of USA where as hiring in Central America. Both the banks are interested in hiring employes skilled in the field of finance, management, FIS and Tech Security.
+   The graphical analysis was made using the Data Studio. On the time of this project, SunTrust Bank is hiring more employees than Discover Financial. The hiring of SunTrust Bank is more focused in Southern East area of USA where as hiring of Discover  Financial is more focused in Central America. Both the banks are interested in hiring employes skilled in the field of finance, management, FIS and Tech Security.
