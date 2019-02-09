@@ -6,26 +6,28 @@ import re
 import csv
 
 
-
-
-
-
-
 def call_csvSun(string_csv, list_Number):
     list_suntrust = []
     url_sun = []
-    job_list_sun_trust = []
     element = []
+
+
     f1 = open(string_csv)
     reader = csv.reader(f1)
     #df1 = pd.read_excel(string_csv)
-    analysis = []
 
-    for row in reader:
-        analysis.append(row[1])
+    job_location = []
+    job_title = []
+
+    df = pd.read_csv('TextRankFinal.csv')
+    analysis = df['customer'].to_list()
     print(analysis)
+    #for row in reader:
+       # a = analysis.append(row[1])
 
-    for i in range(1, 3):
+
+    for i in range(1, 24):
+        job_list_sun_trust = []
         print('==========PAGE' + str(i) + '=====================')
         page = requests.get("https://jobs.suntrust.com/ListJobs/All/Page-" + str(i))
         soup = BeautifulSoup(page.content, "html.parser")
@@ -36,6 +38,9 @@ def call_csvSun(string_csv, list_Number):
         for i in job_desc_a:
             x = i.find('a', href=True)
             element.append(x.text)
+
+        print(len(element))
+
 
         for i in a_href:
             job_list.append(i['href'])
@@ -50,12 +55,20 @@ def call_csvSun(string_csv, list_Number):
 
         for i in job_list_sun_trust:
             print('==========element ' + str(i) + '=====================')
-            # list_words = analysis # Pass list of words from top 100 csv files (lower case)
+            # list_words = analysis # Pass list of words from top 100 csv files (lower case)jobdescription-value
             page = requests.get(i)
             url_sun.append(i)
             soup = BeautifulSoup(page.content, "html.parser")
             job_desc = soup.find_all('div', {'class': 'jobdescription-value'})
             #jobID_suntrust = job_desc[3].text
+            for title in soup.find_all('div', {'class': 'jobdescription-row jobtitle'}):
+                job_title_a = title.find('div', {'class':'jobdescription-value'})
+                job_title.append(job_title_a.h1.text)
+
+            for job_loc in soup.find_all('div', {'class': 'jobdescription-row location'}):
+                job_loc_a = job_loc.find('div', {'class':'jobdescription-value'})
+                job_location.append(job_loc_a.text)
+
 
             for i in job_desc[6:]:
                 a = i.get_text().lower()
@@ -70,24 +83,26 @@ def call_csvSun(string_csv, list_Number):
                             if i not in dict_words:
                                 dict_words[i] = 0
                             dict_words[i] += 1
-                list_suntrust.append(dict_words)
+            list_suntrust.append(dict_words)
         print(list_suntrust)
 
     # for key, value in dict_words.items():
     # print(key, value)
     df1 = pd.DataFrame(list_suntrust)
-    print('==1')
+
     df1['Job ID'] = element
-    print('==1')
+
     df1['Institution'] = 'Suntrust Bank'
-    print('==1')
+
     df1['URL'] = url_sun
-    print('==1')
+
     df1['list id'] = list_Number
-    print('==1')
+    df1['location'] = job_location
+    df1['Job Title'] = job_title
+
     print(df1)
     cols1 = df1.columns.tolist()
-    cols1 = cols1[-4:] + cols1[:-4]
+    cols1 = cols1[-6:] + cols1[:-6]
     df1 = df1[cols1]
     print(cols1)
     df1.to_excel('/Users/Nidhi/PycharmProjects/dataScience/SuntrustTextRank.xlsx')
@@ -99,6 +114,8 @@ list_dictionary = []
 job_id = []
 job_post = []
 url_list = []
+location_discover = []
+postName = []
 a = None
 
 
@@ -107,10 +124,15 @@ def call_csvDis(string_csv, list_number):
     f2 = open(string_csv)
     a = string_csv
     reader = csv.reader(f2)
-    analysisD = []
+    #analysisD = []
 
-    for row in reader:
-        analysisD.append(row[1])
+    df = pd.read_csv('TF_IDF.csv')
+    analysis = df['Column'].to_list()
+    print(analysis)
+
+   # for row in reader:
+      #  print(row)
+        #analysisD.append(row[1])
 
     dict_words = {}
     driver = webdriver.Chrome(executable_path='/Users/Nidhi/PycharmProjects/chromedriver.exe')
@@ -138,8 +160,14 @@ def call_csvDis(string_csv, list_number):
             job_id.append(a)
             element = driver.find_element_by_class_name("jobdetail-desc")
             text.append(element.text)
-            postName = driver.find_element_by_class_name("jobdetail-title")
-            job_post.append(postName.text)
+
+            post_in_job = driver.find_element_by_id("gtm-jobdetail-title")
+            a = post_in_job.text
+            postName.append(a)
+
+            location = driver.find_element_by_class_name("jdlocation")
+            location_discover.append(location.text)
+
 
             dict_words = {}
             for i in text:
@@ -147,7 +175,7 @@ def call_csvDis(string_csv, list_number):
                 i = i.lower()
                 a = i.translate({ord(c): '' for c in "\.{2,}!@#$%^&*()[]\\{};:,./<>?\|`~-=_+\"\“\”"})
                 a = i.split()
-                for i in analysisD:
+                for i in analysis:
                     for j in a:
                         if i == j:
                             if i not in dict_words:
@@ -166,17 +194,20 @@ def call_csvDis(string_csv, list_number):
     df['Institution'] = 'Discover Financials'
     df['URL'] = url_list
     df['list id'] = list_number
+    df['location'] = location_discover
+    df['Job Title'] = postName
 
 
     print(df)
     cols = df.columns.tolist()
-    cols = cols[-4:] + cols[:-4]
+    cols = cols[-6:] + cols[:-6]
     df = df[cols]
     print(cols)
-    df.to_excel('DiscoverTextRank.xlsx')
+    df.to_excel('/Users/Nidhi/PycharmProjects/dataScience/DiscoverTFIDFCount.xlsx')
 
 
-if (__name__ == '_main_'):
-    #call_csvDis('TextRankFinal.csv', 3)
-    call_csvSun('TextRankFinal.csv', 3)
-# call_csvSun('ifcount.csv')
+if __name__ == '__main__':
+    #call_csvDis('wordcount.csv', 1)
+    #call_csvSun('TextRankFinal.csv', 3)
+    #call_csvDis('TF_IDF.csv', 2)
+    df.duplicated()
