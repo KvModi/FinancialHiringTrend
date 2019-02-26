@@ -11,12 +11,6 @@ nltk.download('wordnet')
 lemmatizer = WordNetLemmatizer()
 
 def lemmatise():
-    aws_id = 'AKIAJ7RQNE26LVIT5UOQ' # Access key for Amazon S3
-    aws_secret = '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' # Secret key for Amazon S3
-    s3 = boto3.client('s3', aws_access_key_id=aws_id, aws_secret_access_key=aws_secret)
-    obj = s3.get_object(Bucket='assignment2ds', Key='AllTeamsDraft.csv')
-    data = obj['Body'].read()
-    samplekeywordclusters = pd.read_csv(io.BytesIO(data), encoding='ISO-8859-1')
     
     data = pd.read_csv('AllTeamsS3.csv', encoding = 'ISO-8859-1')
     data['description'] = data['description'].str.lower()
@@ -39,10 +33,5 @@ def lemmatise():
     #print(lemmatised_data[1])
     data['description'] = lemmatised_data
     data.to_csv('LemmatisedDataS3.csv')
-    
-    # To transfer files to amazons3
-    client = boto3.client('s3', aws_access_key_id='AKIAJ7RQNE26LVIT5UOQ', aws_secret_access_key='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')
-    transfer = S3Transfer(client)
-    transfer.upload_file('LemmatisedDataS3.csv', 'assignment2ds', 'LemmatisedDataS3')
-    
+  
 lemmatise()
