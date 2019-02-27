@@ -14,7 +14,7 @@ def combineData():
     for f in sorted(csv):
         df_list.append(pd.read_csv(f))  # Appending all the csv in df_list List
     full_df = pd.concat(df_list, sort=True)
-    full_df.to_csv('AllTeamsS3.csv')  # Converting the list to CSV file
+    full_df.to_csv('24banks.csv')  # Converting the list to CSV file
 
 
 
