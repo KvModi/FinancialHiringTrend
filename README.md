@@ -58,3 +58,6 @@ This file contains different clusters related to FinTech along with their associ
 This file compares the clusters with the LemmatizedDataS3.csv file and returns if the particular job position is a Fintech or non-FinTech job category. If it is a Fintech job, it returns the cluster which it belongs to.
 It is finally pipelined using dask to carry out the tasks in a automated way.
 
+Report: 
+https://codelabs-preview.appspot.com/?file_id=1ESG3tLvEoJXne_LriO1xJ19s4GUo-7rdEP2xcZyipzM#0
+
