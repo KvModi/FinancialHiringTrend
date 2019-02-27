@@ -3,6 +3,8 @@
 
 This project was created to analyse the hiring trend at the current time (February 06, 2019) in the two banks: SunTrust Bank and Discover Financials.
 For this objective, following steps are performed:
+
+Part -1 
 1. merger.py
   Merging the 4 pdf files which are the research conducted by The World Economic forum in the field of FinTech: 
    a. http://www3.weforum.org/docs/Beyond_Fintech_-_A_Pragmatic_Assessment_of_Disruptive_Potential_in_Financial_Services.pdf
@@ -43,21 +45,14 @@ For this objective, following steps are performed:
 PART-2
 
 1. part1.py
-Merging all the datasets of the 12 teams into one single file and performing data cleaning and pre-processing to remove any special characters and finally lemmatizing the file.
+  Merging all the datasets of the 12 teams into one single file, storing the data in '24banks.csv'  and performing data cleaning and pre-processing to remove any   special characters using regex and then lemmatizing the file and storing the result in 'LemmatizedDataS3.csv'.
 
-2. 24banks.csv
-This is the concatenated file from the output of the 12 team datasets.
+2. ClustersList.csv 
+  This file contains different clusters related to FinTech along with their associated words.
 
-3. LemmatizedDataS3.csv 
-This file is created after executing the part1.py code.
-
-4. ClustersList.csv 
-This file contains different clusters related to FinTech along with their associated words.
-
-5. DaskPipelining.py
-This file compares the clusters with the LemmatizedDataS3.csv file and returns if the particular job position is a Fintech or non-FinTech job category. If it is a Fintech job, it returns the cluster which it belongs to.
-It is finally pipelined using dask to carry out the tasks in a automated way.
-
-Report: 
-https://codelabs-preview.appspot.com/?file_id=1ESG3tLvEoJXne_LriO1xJ19s4GUo-7rdEP2xcZyipzM#0
+3. DaskPipelining.py
+  This file compares the clusters stored in 'ClustersList.csv' with the 'LemmatizedDataS3.csv' file and returns if the  
+  particular job position is a Fintech or non-FinTech job category. If it is a Fintech job, it labels the job with the cluster 
+  name which it belongs to.
+  It is finally pipelined using dask to carry out the tasks in a automated way.
 
