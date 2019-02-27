@@ -55,4 +55,6 @@ PART-2
   particular job position is a Fintech or non-FinTech job category. If it is a Fintech job, it labels the job with the cluster 
   name which it belongs to.
   It is finally pipelined using dask to carry out the tasks in a automated way.
+  Claat Report:  
+  https://codelabs-preview.appspot.com/?file_id=1ESG3tLvEoJXne_LriO1xJ19s4GUo-7rdEP2xcZyipzM#0
 
