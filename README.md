@@ -39,3 +39,22 @@ For this objective, following steps are performed:
   
 9. Data Studio
    The graphical analysis was made using the Data Studio. On the time of this project, SunTrust Bank is hiring more employees than Discover Financial. The hiring of SunTrust Bank is more focused in Southern East area of USA where as hiring of Discover  Financial is more focused in Central America. Both the banks are interested in hiring employes skilled in the field of finance, management, FIS and Tech Security.
+   
+PART-2
+
+1. part1.py
+Merging all the datasets of the 12 teams into one single file and performing data cleaning and pre-processing to remove any special characters and finally lemmatizing the file.
+
+2. 24banks.csv
+This is the concatenated file from the output of the 12 team datasets.
+
+3. LemmatizedDataS3.csv 
+This file is created after executing the part1.py code.
+
+4. ClustersList.csv 
+This file contains different clusters related to FinTech along with their associated words.
+
+5. DaskPipelining.py
+This file compares the clusters with the LemmatizedDataS3.csv file and returns if the particular job position is a Fintech or non-FinTech job category. If it is a Fintech job, it returns the cluster which it belongs to.
+It is finally pipelined using dask to carry out the tasks in a automated way.
+
