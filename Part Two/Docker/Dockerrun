@@ -1,0 +1,3 @@
+to run the docker image:
+
+docker run smitchandarana/hiringtrend
