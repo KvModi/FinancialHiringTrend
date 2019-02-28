@@ -22,8 +22,7 @@ from nltk.stem import WordNetLemmatizer
 
 
 def lemmatise():
-    aws_id = 'AKIAJ7RQNE26LVIT5UOQ'  # Access key for Amazon S3
-    aws_secret = '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'  # Secret key for Amazon S3
+   
     s3 = boto3.client('s3', aws_access_key_id=aws_id, aws_secret_access_key=aws_secret)
     obj = s3.get_object(Bucket='assignment2ds', Key='AllTeamsDraft.csv')
     data = obj['Body'].read()
